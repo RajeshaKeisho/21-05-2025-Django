@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>Task List (FBV vs CBV)</h1>
+
+    <a href="{% url 'cbv_task_list' %}">CBV Version</a> | <a href="{% url 'task_list' %}">FBV Version</a>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit">Add Task</button>
+    </form>
+    
+    <ul>
+        
+        {% for task in tasks %}
+        <li>{{task.title}} - {{task.description}}- {{task.completed}}
+            <a href="{% url 'cbv_task_update'  task.id %}">EDIT</a>
+            <a href="{% url 'cbv_task_delete'  task.id %}">DELETE</a>
+        </li>
+
+    {% empty %}
+    <li>NO Task Available</li>
+            
+        {% endfor %}
+            
+    </ul>
+
+</body>
+</html>
